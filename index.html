@@ -458,8 +458,7 @@
 
         <figure class="hero-media">
           <img src="media/poster-ceremony.jpeg" alt="EEML 2026 poster award ceremony">
-          <!-- CONFIRM Viorica's surname before publishing -->
-          <figcaption>At the EEML 2026 poster award ceremony, with Razvan Pascanu and Viorica [surname?].</figcaption>
+          <figcaption>At the EEML 2026 poster award ceremony, with Razvan Pascanu and Viorica Patraucean.</figcaption>
         </figure>
 
         <div class="rlinks">
@@ -506,11 +505,8 @@
                 <p class="jtext">Studied how the consistency term shapes training — trading some stability
                   for a faster, higher-peaking policy.</p>
                 <figure>
-                  <div class="media-slot">
-                    <svg viewBox="0 0 24 24"><path d="M19 3H5a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V5a2 2 0 0 0-2-2zm0 14.5-4-5-3 4-2-2.5L7 17.5V5h12v12.5z"/><circle cx="8.5" cy="8.5" r="1.5"/></svg>
-                    <span class="fn">media/td-mpc-reward-curves.png</span>
-                    <span class="lbl">Reward curves — reproduction vs. ablation.</span>
-                  </div>
+                  <img src="media/td-mpc-reward-curves.png" alt="TD-MPC reward curves: reproduction vs. ablation">
+                  <figcaption>Reproduction plateaus near 7000; removing the latent-consistency loss reaches ~9000+ but trains far less stably.</figcaption>
                 </figure>
               </div>
 
@@ -524,6 +520,51 @@
                 </figure>
               </div>
 
+            </div>
+          </div>
+        </details>
+      </article>
+
+      <!-- ---------- PROJECT 3: EESTech ---------- -->
+      <article class="rentry">
+        <div class="rtop">
+          <h3>EESTech Challenge — Autonomous Driving</h3>
+          <span class="when">2026</span>
+        </div>
+        <div class="org">1st place, EESTech Challenge Novi Sad — among 10 teams</div>
+
+        <p class="rlede">
+          A 24-hourhackathon where my team built an autonomous-driving simulation that navigates varied
+          environments and makes real-time driving decisions. After several heavier approaches hit dead
+          ends, our breakthrough was tuning a PID controller on LiDAR and camera data for precise track-following — a
+          solution no other team used — and it won us <strong>1st place</strong>.
+        </p>
+
+        <figure class="hero-media">
+          <div class="media-slot wide">
+            <svg viewBox="0 0 24 24"><path d="M19 3H5a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V5a2 2 0 0 0-2-2zm0 14.5-4-5-3 4-2-2.5L7 17.5V5h12v12.5z"/><circle cx="8.5" cy="8.5" r="1.5"/></svg>
+            <span class="fn">media/eestech.jpg</span>
+            <span class="lbl">Team photo from the competition.</span>
+          </div>
+        </figure>
+
+        <details class="curious">
+          <summary class="csum"><span class="chev">▸</span> The approach — for the curious</summary>
+          <div class="cbody">
+            <div class="journey">
+              <div class="jstep">
+                <div class="num">1</div>
+                <h4>The task</h4>
+                <p class="jtext">Build an agent that drives autonomously through different environments under
+                  tight deadlines, combining control systems, perception and intelligent algorithms.</p>
+              </div>
+              <div class="jstep">
+                <div class="num">2</div>
+                <h4>The breakthrough</h4>
+                <p class="jtext">After experimenting with heavier methods, tuning a PID controller directly on
+                  LiDAR and camera data gave the precise, reliable track-following that set our run apart from the
+                  other teams.</p>
+              </div>
             </div>
           </div>
         </details>
@@ -555,8 +596,37 @@
           </span>
         </div>
 
-        <!-- DUPLICATE THIS BLOCK for each new project. Swap the "soon" span for a real link:
-             <a class="repo" href="https://github.com/radulovicc/REPO"><svg ...></svg> Repository</a> -->
+        <div class="panel">
+          <h3>Pedestrian trajectory prediction</h3>
+          <div class="when">2025</div>
+          <div class="desc">
+            Predicting a pedestrian's next ~2 seconds of motion from their recent positions, on the ETH BIWI
+            dataset. Engineered relative-motion and social (nearest-neighbour) features, split by pedestrian
+            to avoid leakage, and compared baselines, linear models, Random Forest and XGBoost — best model
+            reaches 0.19 m average displacement error. Served through a small FastAPI app.
+          </div>
+          <div class="tags"><span class="tag">Python</span><span class="tag">XGBoost</span><span class="tag">scikit-learn</span><span class="tag">FastAPI</span></div>
+          <a class="repo" href="https://github.com/radulovicc/Pedestrain-prediction-using-ML-algorithms">
+            <svg viewBox="0 0 24 24"><path d="M12 2C6.5 2 2 6.6 2 12.3c0 4.5 2.9 8.3 6.8 9.7.5.1.7-.2.7-.5v-1.7c-2.8.6-3.4-1.4-3.4-1.4-.5-1.2-1.1-1.5-1.1-1.5-.9-.6.1-.6.1-.6 1 .1 1.5 1 1.5 1 .9 1.6 2.4 1.1 3 .9.1-.7.4-1.1.6-1.4-2.2-.3-4.6-1.1-4.6-5 0-1.1.4-2 1-2.7-.1-.3-.5-1.3.1-2.7 0 0 .8-.3 2.7 1a9 9 0 0 1 4.9 0c1.9-1.3 2.7-1 2.7-1 .6 1.4.2 2.4.1 2.7.6.7 1 1.6 1 2.7 0 3.9-2.4 4.7-4.6 5 .4.3.7.9.7 1.9v2.8c0 .3.2.6.7.5a10.3 10.3 0 0 0 6.8-9.7C22 6.6 17.5 2 12 2z"/></svg>
+            Repository
+          </a>
+        </div>
+
+        <div class="panel">
+          <h3>Road-user detection with YOLOv8</h3>
+          <div class="when">2025</div>
+          <div class="desc">
+            Bounding-box detection of cars, pedestrians and cyclists from a moving vehicle. Trained and
+            compared YOLOv8 Nano and Small plus a focal-loss, class-balanced variant on a custom ~400-image
+            dataset, reaching 80% mAP@50 on the test split.
+          </div>
+          <div class="tags"><span class="tag">Python</span><span class="tag">YOLOv8</span><span class="tag">PyTorch</span><span class="tag">object detection</span></div>
+          <a class="repo" href="https://github.com/radulovicc/Bounding-box-object-detection">
+            <svg viewBox="0 0 24 24"><path d="M12 2C6.5 2 2 6.6 2 12.3c0 4.5 2.9 8.3 6.8 9.7.5.1.7-.2.7-.5v-1.7c-2.8.6-3.4-1.4-3.4-1.4-.5-1.2-1.1-1.5-1.1-1.5-.9-.6.1-.6.1-.6 1 .1 1.5 1 1.5 1 .9 1.6 2.4 1.1 3 .9.1-.7.4-1.1.6-1.4-2.2-.3-4.6-1.1-4.6-5 0-1.1.4-2 1-2.7-.1-.3-.5-1.3.1-2.7 0 0 .8-.3 2.7 1a9 9 0 0 1 4.9 0c1.9-1.3 2.7-1 2.7-1 .6 1.4.2 2.4.1 2.7.6.7 1 1.6 1 2.7 0 3.9-2.4 4.7-4.6 5 .4.3.7.9.7 1.9v2.8c0 .3.2.6.7.5a10.3 10.3 0 0 0 6.8-9.7C22 6.6 17.5 2 12 2z"/></svg>
+            Repository
+          </a>
+        </div>
+
         <div class="panel">
           <h3>More coming</h3>
           <div class="when">ongoing</div>
@@ -592,7 +662,7 @@
   <section id="contact" class="contact">
     <div class="wrap">
       <h2>Get in touch</h2>
-      <p class="sub">Open to summer research internships and collaborations in robot learning and embodied AI.</p>
+      <p class="sub">Open to research internships in robot learning and embodied AI.</p>
       <div class="contact-links">
         <a href="mailto:alradulovic2004@gmail.com">
           <svg viewBox="0 0 24 24"><path d="M20 4H4c-1.1 0-2 .9-2 2v12c0 1.1.9 2 2 2h16c1.1 0 2-.9 2-2V6c0-1.1-.9-2-2-2zm0 4l-8 5-8-5V6l8 5 8-5v2z"/></svg>
