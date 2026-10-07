@@ -163,6 +163,10 @@
   figure{margin:0;}
   figcaption{font-size:13px;color:var(--muted);margin-top:8px;line-height:1.5;}
   .hero-media{margin-bottom:8px;}
+  figure img,figure video{display:block;max-width:100%;height:auto;margin:0 auto;
+    border-radius:10px;border:1px solid var(--line);}
+  .hero-media img,.hero-media video{width:100%;max-height:560px;object-fit:cover;}
+  .jstep figure img,.jstep figure video{max-height:440px;}
 
   /* media placeholder (until real image/video is dropped in) */
   .media-slot{border:1.5px dashed var(--olive-soft);border-radius:10px;
@@ -373,11 +377,8 @@
                 <p class="jtext">Designed and 3D-printed a custom end-effector so the arm can handle the
                   task objects reliably.</p>
                 <figure>
-                  <div class="media-slot">
-                    <svg viewBox="0 0 24 24"><path d="M19 3H5a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V5a2 2 0 0 0-2-2zm0 14.5-4-5-3 4-2-2.5L7 17.5V5h12v12.5z"/><circle cx="8.5" cy="8.5" r="1.5"/></svg>
-                    <span class="fn">media/end-effector.jpg</span>
-                    <span class="lbl">CAD render and/or the printed part on the arm.</span>
-                  </div>
+                  <img src="media/end-effector.png" alt="Custom 3D-printed end-effector">
+                  <figcaption>The custom 3D-printed end-effector.</figcaption>
                 </figure>
               </div>
 
@@ -429,11 +430,8 @@
                 <p class="jtext">Ran the policy on the physical robot and studied where simulation and
                   reality diverge — and how to close that gap.</p>
                 <figure>
-                  <div class="media-slot">
-                    <svg viewBox="0 0 24 24"><path d="M4 4h16a2 2 0 0 1 2 2v12a2 2 0 0 1-2 2H4a2 2 0 0 1-2-2V6a2 2 0 0 1 2-2zm6 4v8l6-4-6-4z"/></svg>
-                    <span class="fn">media/eval.mp4</span>
-                    <span class="lbl">Side-by-side of sim rollout vs. the real robot.</span>
-                  </div>
+                  <img src="media/eval.jpeg" alt="Policy evaluation on the real robot">
+                  <figcaption>Evaluating the policy on the physical robot.</figcaption>
                 </figure>
               </div>
 
@@ -459,11 +457,7 @@
         </p>
 
         <figure class="hero-media">
-          <div class="media-slot wide">
-            <svg viewBox="0 0 24 24"><path d="M19 3H5a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V5a2 2 0 0 0-2-2zm0 14.5-4-5-3 4-2-2.5L7 17.5V5h12v12.5z"/><circle cx="8.5" cy="8.5" r="1.5"/></svg>
-            <span class="fn">media/poster-ceremony.jpeg</span>
-            <span class="lbl">The poster award ceremony.</span>
-          </div>
+          <img src="media/poster-ceremony.jpeg" alt="EEML 2026 poster award ceremony">
           <!-- CONFIRM Viorica's surname before publishing -->
           <figcaption>At the EEML 2026 poster award ceremony, with Razvan Pascanu and Viorica [surname?].</figcaption>
         </figure>
@@ -501,11 +495,8 @@
                 <p class="jtext">The reproduced agent learns to run the HalfCheetah locomotion benchmark
                   end-to-end from its learned latent world model.</p>
                 <figure>
-                  <div class="media-slot">
-                    <svg viewBox="0 0 24 24"><path d="M4 4h16a2 2 0 0 1 2 2v12a2 2 0 0 1-2 2H4a2 2 0 0 1-2-2V6a2 2 0 0 1 2-2zm6 4v8l6-4-6-4z"/></svg>
-                    <span class="fn">media/halfcheetah-trained.mp4</span>
-                    <span class="lbl">The trained HalfCheetah running.</span>
-                  </div>
+                  <video src="media/halfcheetah-trained.mp4" controls muted loop playsinline preload="metadata"></video>
+                  <figcaption>The trained HalfCheetah running.</figcaption>
                 </figure>
               </div>
 
@@ -528,11 +519,8 @@
                 <h4>The poster</h4>
                 <p class="jtext">Presented the work at the poster session and received the Best Poster award.</p>
                 <figure>
-                  <div class="media-slot">
-                    <svg viewBox="0 0 24 24"><path d="M19 3H5a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V5a2 2 0 0 0-2-2zm0 14.5-4-5-3 4-2-2.5L7 17.5V5h12v12.5z"/><circle cx="8.5" cy="8.5" r="1.5"/></svg>
-                    <span class="fn">media/td-mpc-poster.jpg</span>
-                    <span class="lbl">A photo of you at the poster.</span>
-                  </div>
+                  <img src="media/td-mpc-poster.jpeg" alt="At the TD-MPC poster">
+                  <figcaption>At the poster session.</figcaption>
                 </figure>
               </div>
 
