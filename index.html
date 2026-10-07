@@ -1,0 +1,646 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Aleksandar Radulović — Robot Learning</title>
+
+<!-- Fonts load from Google when the site is online (e.g. on GitHub Pages). -->
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,400;9..144,500;9..144,600&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+
+<style>
+  :root{
+    --cream:#F4EFE4;      /* warm beige base            */
+    --paper:#FBF9F4;      /* near-white raised areas     */
+    --white:#FFFFFF;
+    --olive:#54603F;      /* deep olive — primary accent */
+    --olive-soft:#7C875C; /* lighter olive               */
+    --ink:#272520;        /* warm near-black text        */
+    --muted:#6C6655;      /* secondary text              */
+    --line:#E3DCCB;       /* hairline on cream           */
+    --max:1080px;
+  }
+
+  *{box-sizing:border-box;margin:0;padding:0;}
+  html{scroll-behavior:smooth;scroll-padding-top:76px;}
+  body{
+    font-family:'Inter',system-ui,-apple-system,Segoe UI,Helvetica,Arial,sans-serif;
+    color:var(--ink);
+    background:var(--cream);
+    line-height:1.6;
+    -webkit-font-smoothing:antialiased;
+  }
+  a{color:inherit;}
+  img{max-width:100%;display:block;}
+
+  .wrap{max-width:var(--max);margin:0 auto;padding:0 28px;}
+
+  h1,h2,h3{font-family:'Fraunces','Georgia',serif;font-weight:500;line-height:1.1;}
+
+  /* ---------- NAV ---------- */
+  header.nav{
+    position:sticky;top:0;z-index:50;
+    background:rgba(244,239,228,0.88);
+    backdrop-filter:saturate(120%) blur(8px);
+    border-bottom:1px solid var(--line);
+  }
+  .nav-inner{display:flex;align-items:center;justify-content:space-between;gap:16px;
+    max-width:var(--max);margin:0 auto;padding:14px 28px;flex-wrap:wrap;}
+  .brand{font-family:'Fraunces',serif;font-size:19px;font-weight:600;letter-spacing:.2px;}
+  .brand span{color:var(--olive);}
+  nav ul{list-style:none;display:flex;align-items:center;gap:22px;flex-wrap:wrap;}
+  nav a{font-size:14.5px;color:var(--muted);text-decoration:none;padding:4px 0;
+    border-bottom:1.5px solid transparent;transition:color .15s,border-color .15s;}
+  nav a:hover{color:var(--ink);}
+  nav a.active{color:var(--olive);border-bottom-color:var(--olive);}
+  .cv-btn{display:inline-block;background:var(--olive);color:var(--paper)!important;
+    padding:8px 16px;border-radius:999px;font-size:14px;font-weight:500;text-decoration:none;
+    border-bottom:none!important;transition:background .15s;}
+  .cv-btn:hover{background:#44502f;}
+
+  /* ---------- HERO ---------- */
+  .hero{padding:72px 0 64px;}
+  .hero-grid{display:grid;grid-template-columns:1.4fr .9fr;gap:52px;align-items:center;}
+  .hero h1{font-size:60px;letter-spacing:-.5px;margin-bottom:14px;}
+  .hero .lead{font-family:'Fraunces',serif;font-size:22px;color:var(--olive);
+    font-weight:400;margin-bottom:20px;}
+  .hero p.intro{font-size:16.5px;color:var(--muted);max-width:52ch;margin-bottom:26px;}
+  .actions{display:flex;flex-wrap:wrap;gap:12px;align-items:center;}
+  .btn{display:inline-flex;align-items:center;gap:8px;font-size:14.5px;font-weight:500;
+    text-decoration:none;padding:10px 18px;border-radius:999px;transition:all .15s;}
+  .btn-primary{background:var(--olive);color:var(--paper);}
+  .btn-primary:hover{background:#44502f;}
+  .btn-ghost{background:transparent;color:var(--ink);border:1.5px solid var(--line);}
+  .btn-ghost:hover{border-color:var(--olive);color:var(--olive);}
+  .btn svg{width:17px;height:17px;fill:currentColor;}
+
+  /* photo */
+  .photo-frame{position:relative;}
+  .photo-frame::before{content:"";position:absolute;inset:0;transform:translate(16px,16px);
+    border:2px solid var(--olive-soft);border-radius:14px;}
+  .photo{position:relative;border-radius:14px;overflow:hidden;background:var(--olive-soft);
+    aspect-ratio:4/5;border:1px solid var(--line);}
+  .photo img{width:100%;height:100%;object-fit:cover;}
+  .photo-fallback{width:100%;height:100%;display:flex;align-items:center;justify-content:center;
+    font-family:'Fraunces',serif;font-size:72px;color:var(--paper);background:var(--olive);}
+
+  /* ---------- SECTIONS ---------- */
+  section{padding:66px 0;border-top:1px solid var(--line);}
+  section.on-white{background:var(--white);}
+  section.on-paper{background:var(--paper);}
+  .sec-head{margin-bottom:34px;}
+  .sec-head h2{font-size:34px;letter-spacing:-.3px;}
+  .sec-head p{color:var(--muted);margin-top:8px;font-size:15.5px;max-width:60ch;}
+
+  .prose p{font-size:16.5px;color:#403c33;max-width:68ch;margin-bottom:16px;}
+  .prose p:last-child{margin-bottom:0;}
+  .prose strong{color:var(--ink);font-weight:600;}
+
+  /* entries (research) */
+  .entry{display:grid;grid-template-columns:150px 1fr;gap:26px;padding:26px 0;
+    border-top:1px solid var(--line);}
+  .entry:first-of-type{border-top:none;}
+  .entry .when{font-size:14px;color:var(--olive);font-weight:500;padding-top:3px;}
+  .entry h3{font-size:20px;margin-bottom:3px;}
+  .entry .org{font-size:14.5px;color:var(--muted);margin-bottom:10px;}
+  .entry .desc{font-size:15.5px;color:#403c33;max-width:62ch;margin-bottom:12px;}
+
+  .repo{display:inline-flex;align-items:center;gap:7px;font-size:14px;font-weight:500;
+    color:var(--olive);text-decoration:none;border-bottom:1px solid transparent;transition:border-color .15s;}
+  .repo:hover{border-bottom-color:var(--olive);}
+  .repo svg{width:16px;height:16px;fill:currentColor;}
+  .repo.soon{color:var(--muted);cursor:default;}
+  .repo.soon svg{opacity:.5;}
+
+  /* project panels */
+  .projects{display:grid;grid-template-columns:1fr 1fr;gap:20px;}
+  .panel{background:var(--cream);border:1px solid var(--line);border-radius:12px;
+    padding:24px;transition:border-color .15s;}
+  section.on-white .panel{background:var(--paper);}
+  .panel:hover{border-color:var(--olive-soft);}
+  .panel h3{font-size:19px;margin-bottom:4px;}
+  .panel .when{font-size:13.5px;color:var(--olive);font-weight:500;margin-bottom:10px;}
+  .panel .desc{font-size:15px;color:#403c33;margin-bottom:14px;}
+  .tags{display:flex;flex-wrap:wrap;gap:7px;margin-bottom:16px;}
+  .tag{font-size:12px;color:var(--muted);background:var(--white);border:1px solid var(--line);
+    padding:3px 10px;border-radius:999px;}
+  section.on-white .tag{background:var(--cream);}
+
+  /* awards */
+  .awards{list-style:none;max-width:72ch;}
+  .awards li{display:grid;grid-template-columns:20px 1fr;gap:12px;padding:12px 0;
+    border-top:1px solid var(--line);font-size:16px;}
+  .awards li:first-child{border-top:none;}
+  .awards .mark{color:var(--olive);font-family:'Fraunces',serif;font-size:18px;line-height:1.4;}
+  .awards b{font-weight:600;}
+  .awards span.meta{color:var(--muted);}
+
+  /* contact */
+  .contact{background:var(--olive);color:var(--cream);border-top:none;}
+  .contact h2{color:var(--paper);font-size:34px;margin-bottom:10px;}
+  .contact p.sub{color:#DFE2CF;max-width:54ch;margin-bottom:26px;font-size:16.5px;}
+  .contact-links{display:flex;flex-wrap:wrap;gap:14px;}
+  .contact-links a{display:inline-flex;align-items:center;gap:9px;color:var(--cream);
+    text-decoration:none;font-size:15px;border:1.5px solid rgba(255,255,255,.35);
+    padding:10px 18px;border-radius:999px;transition:all .15s;}
+  .contact-links a:hover{background:rgba(255,255,255,.12);border-color:rgba(255,255,255,.7);}
+  .contact-links svg{width:17px;height:17px;fill:currentColor;}
+
+  footer.foot{background:var(--olive);color:#CDD2BB;font-size:13.5px;
+    padding:0 0 30px;text-align:center;}
+
+  /* ---------- RICH RESEARCH ---------- */
+  .rentry{padding:40px 0;border-top:1px solid var(--line);}
+  .rentry:first-of-type{border-top:none;padding-top:6px;}
+  .rtop{display:flex;flex-wrap:wrap;align-items:baseline;gap:10px 16px;margin-bottom:4px;}
+  .rtop h3{font-size:24px;}
+  .rtop .when{font-size:14px;color:var(--olive);font-weight:500;}
+  .rentry .org{font-size:15px;color:var(--muted);margin-bottom:16px;}
+  .rlede{font-size:16.5px;color:#403c33;max-width:66ch;margin-bottom:20px;}
+
+  figure{margin:0;}
+  figcaption{font-size:13px;color:var(--muted);margin-top:8px;line-height:1.5;}
+  .hero-media{margin-bottom:8px;}
+
+  /* media placeholder (until real image/video is dropped in) */
+  .media-slot{border:1.5px dashed var(--olive-soft);border-radius:10px;
+    background:rgba(84,96,63,.055);display:flex;flex-direction:column;align-items:center;
+    justify-content:center;gap:9px;text-align:center;padding:22px;min-height:150px;}
+  .media-slot.wide{aspect-ratio:16/9;}
+  .media-slot svg{width:26px;height:26px;fill:var(--olive-soft);}
+  .media-slot .fn{font-size:12.5px;color:var(--olive);background:var(--white);
+    border:1px solid var(--line);padding:3px 10px;border-radius:6px;font-weight:500;}
+  .media-slot .lbl{font-size:13px;color:var(--muted);max-width:40ch;}
+  section.on-white .media-slot .fn{background:var(--cream);}
+
+  /* expandable deep-dive */
+  details.curious{border:1px solid var(--line);border-radius:12px;background:var(--paper);
+    margin-top:4px;overflow:hidden;}
+  section.on-white details.curious{background:var(--cream);}
+  summary.csum{cursor:pointer;list-style:none;padding:15px 20px;font-weight:500;
+    color:var(--olive);display:flex;align-items:center;gap:10px;font-size:15.5px;
+    font-family:'Inter',sans-serif;}
+  summary.csum::-webkit-details-marker{display:none;}
+  summary.csum .chev{display:inline-block;transition:transform .2s;font-size:13px;}
+  details[open] summary.csum .chev{transform:rotate(90deg);}
+  summary.csum:hover{background:rgba(84,96,63,.05);}
+  .cbody{padding:8px 24px 26px;}
+
+  /* journey timeline */
+  .journey{position:relative;margin-top:10px;}
+  .jstep{position:relative;padding-left:40px;padding-bottom:30px;}
+  .jstep::before{content:"";position:absolute;left:14px;top:6px;bottom:-6px;width:2px;background:var(--line);}
+  .jstep:last-child{padding-bottom:4px;}
+  .jstep:last-child::before{display:none;}
+  .jstep .num{position:absolute;left:0;top:0;width:30px;height:30px;border-radius:50%;
+    background:var(--olive);color:var(--paper);display:flex;align-items:center;justify-content:center;
+    font-size:14px;font-weight:600;font-family:'Fraunces',serif;border:4px solid var(--paper);}
+  section.on-white .jstep .num{border-color:var(--cream);}
+  .jstep h4{font-family:'Fraunces',serif;font-weight:500;font-size:18px;margin-bottom:5px;}
+  .jstep .jtext{font-size:15px;color:#403c33;max-width:60ch;margin-bottom:12px;}
+  .jstep.todo .num{background:var(--olive-soft);}
+  .soon-pill{display:inline-block;font-size:12px;color:var(--olive);background:var(--white);
+    border:1px solid var(--line);border-radius:999px;padding:2px 10px;}
+  section.on-white .soon-pill{background:var(--cream);}
+
+  .rlinks{display:flex;flex-wrap:wrap;gap:16px;align-items:center;margin-top:20px;}
+
+  /* ---------- RESPONSIVE ---------- */
+  @media (max-width:820px){
+    .hero-grid{grid-template-columns:1fr;gap:40px;}
+    .photo-frame{max-width:300px;}
+    .hero h1{font-size:46px;}
+    .projects{grid-template-columns:1fr;}
+    .entry{grid-template-columns:1fr;gap:6px;}
+    .entry .when{padding-top:0;}
+    .brand{font-size:17px;}
+    nav ul{gap:16px;}
+  }
+  @media (max-width:560px){
+    .hero h1{font-size:38px;}
+    .sec-head h2,.contact h2{font-size:28px;}
+    .nav-inner{padding:12px 20px;}
+    .wrap{padding:0 20px;}
+  }
+
+  @media (prefers-reduced-motion:reduce){
+    html{scroll-behavior:auto;}
+    *{transition:none!important;}
+  }
+</style>
+</head>
+<body>
+
+  <!-- ===================== NAV ===================== -->
+  <header class="nav">
+    <div class="nav-inner">
+      <div class="brand">Aleksandar <span>Radulović</span></div>
+      <nav>
+        <ul>
+          <li><a href="#about">About</a></li>
+          <li><a href="#research">Research</a></li>
+          <li><a href="#projects">Projects</a></li>
+          <li><a href="#awards">Awards</a></li>
+          <li><a href="#contact">Contact</a></li>
+          <!-- Put CV_Aleksandar_Radulovic.pdf in the same repo folder for this link to work -->
+          <li><a class="cv-btn" href="CV_Aleksandar_Radulovic.pdf">CV</a></li>
+        </ul>
+      </nav>
+    </div>
+  </header>
+
+  <!-- ===================== HERO ===================== -->
+  <div class="hero">
+    <div class="wrap hero-grid">
+      <div>
+        <h1>Aleksandar Radulović</h1>
+        <div class="lead">Robots that learn to act — on real hardware.</div>
+        <p class="intro">
+          Third-year Computer and Control Engineering student in Novi Sad. I work on reinforcement
+          learning and the generative models behind Vision-Language-Action systems, and I run a
+          robot-learning project on a real FANUC arm.
+        </p>
+        <div class="actions">
+          <a class="btn btn-primary" href="#contact">Get in touch</a>
+          <a class="btn btn-ghost" href="https://github.com/radulovicc">
+            <svg viewBox="0 0 24 24"><path d="M12 2C6.5 2 2 6.6 2 12.3c0 4.5 2.9 8.3 6.8 9.7.5.1.7-.2.7-.5v-1.7c-2.8.6-3.4-1.4-3.4-1.4-.5-1.2-1.1-1.5-1.1-1.5-.9-.6.1-.6.1-.6 1 .1 1.5 1 1.5 1 .9 1.6 2.4 1.1 3 .9.1-.7.4-1.1.6-1.4-2.2-.3-4.6-1.1-4.6-5 0-1.1.4-2 1-2.7-.1-.3-.5-1.3.1-2.7 0 0 .8-.3 2.7 1a9 9 0 0 1 4.9 0c1.9-1.3 2.7-1 2.7-1 .6 1.4.2 2.4.1 2.7.6.7 1 1.6 1 2.7 0 3.9-2.4 4.7-4.6 5 .4.3.7.9.7 1.9v2.8c0 .3.2.6.7.5a10.3 10.3 0 0 0 6.8-9.7C22 6.6 17.5 2 12 2z"/></svg>
+            GitHub
+          </a>
+        </div>
+      </div>
+
+      <div class="photo-frame">
+        <div class="photo">
+          <!-- Add a file named photo.jpg to the repo. Until then, initials show. -->
+          <img src="photo.jpg" alt="Aleksandar Radulović"
+               onerror="this.style.display='none';this.nextElementSibling.style.display='flex';">
+          <div class="photo-fallback" style="display:none">AR</div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ===================== ABOUT ===================== -->
+  <section id="about" class="on-white">
+    <div class="wrap">
+      <div class="sec-head"><h2>About</h2></div>
+      <div class="prose">
+        <p>
+          I'm a third-year Computer and Control Engineering student at the Faculty of Technical Sciences
+          in Novi Sad, working where machine learning meets control theory. What I care about is getting
+          real robots to learn how to act — on hardware, not just in simulation.
+        </p>
+        <p>
+          My focus began with <strong>reinforcement learning for continuous control</strong>, sparked by
+          building RL agents for autonomous-driving challenges and deepened through model-based RL.
+          Reproducing <strong>TD-MPC</strong> from scratch for the EEML summer school was a turning point:
+          the researchers I met there pointed me toward generative models, and I've since been drawn to
+          <strong>diffusion and flow matching</strong> as a principled foundation for learning robot
+          policies — the same family of methods behind modern Vision-Language-Action (VLA) systems.
+        </p>
+        <p>
+          Today I run a robot-learning research project at the <strong>Institute for Artificial
+          Intelligence</strong> in Novi Sad, working hands-on with a real FANUC arm: building the data
+          pipeline, moving the workcell into simulation, and fine-tuning and evaluating VLA policies.
+        </p>
+        <p>
+          My ambition is to become a researcher in <strong>Embodied AI and Robot Learning</strong> and to
+          pursue a master's and PhD at a top robotics group. I learn fastest with strong mentorship and
+          hard problems — and that's exactly what I'm looking for.
+        </p>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===================== RESEARCH ===================== -->
+  <section id="research">
+    <div class="wrap">
+      <div class="sec-head">
+        <h2>Research &amp; experience</h2>
+        <p>A walk through what I've built. Open <em>“the full pipeline”</em> on any project to go deep —
+          images, clips and all.</p>
+      </div>
+
+      <!-- ============================================================
+           HOW TO ADD MEDIA:  replace a <div class="media-slot ...">...</div>
+           block with one of these (put the file in a /media folder in the repo):
+             image:  <img src="media/NAME.jpg" alt="...">
+             video:  <video src="media/NAME.mp4" controls muted loop playsinline></video>
+           Keep it inside the <figure> so the caption stays attached.
+           ============================================================ -->
+
+      <!-- ---------- PROJECT 1: FANUC VLA ---------- -->
+      <article class="rentry">
+        <div class="rtop">
+          <h3>Vision-Language-Action learning on a FANUC arm</h3>
+          <span class="when">2026 — present</span>
+        </div>
+        <div class="org">Institute for Artificial Intelligence, Novi Sad — Research Intern &rarr; Continuing Researcher</div>
+
+        <p class="rlede">
+          My main research: an end-to-end Vision-Language-Action (VLA) system on a real FANUC CRX
+          collaborative arm. The robot looks at a scene, reads a natural-language instruction, and produces
+          the motion to carry it out. I own the whole path — from machining the hardware, through collecting
+          data and moving the setup into simulation, to training and evaluating the policy on the real robot.
+        </p>
+
+        <figure class="hero-media">
+          <div class="media-slot wide">
+            <svg viewBox="0 0 24 24"><path d="M4 4h16a2 2 0 0 1 2 2v12a2 2 0 0 1-2 2H4a2 2 0 0 1-2-2V6a2 2 0 0 1 2-2zm6 4v8l6-4-6-4z"/></svg>
+            <span class="fn">media/vla-hero.mp4</span>
+            <span class="lbl">Short clip of the robot completing the task — the one thing to show first.</span>
+          </div>
+          <figcaption>The FANUC CRX running the learned policy.</figcaption>
+        </figure>
+
+        <div class="rlinks">
+          <span class="repo soon">
+            <svg viewBox="0 0 24 24"><path d="M12 2C6.5 2 2 6.6 2 12.3c0 4.5 2.9 8.3 6.8 9.7.5.1.7-.2.7-.5v-1.7c-2.8.6-3.4-1.4-3.4-1.4-.5-1.2-1.1-1.5-1.1-1.5-.9-.6.1-.6.1-.6 1 .1 1.5 1 1.5 1 .9 1.6 2.4 1.1 3 .9.1-.7.4-1.1.6-1.4-2.2-.3-4.6-1.1-4.6-5 0-1.1.4-2 1-2.7-.1-.3-.5-1.3.1-2.7 0 0 .8-.3 2.7 1a9 9 0 0 1 4.9 0c1.9-1.3 2.7-1 2.7-1 .6 1.4.2 2.4.1 2.7.6.7 1 1.6 1 2.7 0 3.9-2.4 4.7-4.6 5 .4.3.7.9.7 1.9v2.8c0 .3.2.6.7.5a10.3 10.3 0 0 0 6.8-9.7C22 6.6 17.5 2 12 2z"/></svg>
+            Repository coming soon
+          </span>
+        </div>
+
+        <details class="curious">
+          <summary class="csum"><span class="chev">▸</span> The full pipeline — for the curious</summary>
+          <div class="cbody">
+            <div class="journey">
+
+              <div class="jstep">
+                <div class="num">1</div>
+                <h4>Hardware &amp; end-effector</h4>
+                <p class="jtext">Designed and 3D-printed a custom end-effector so the arm can handle the
+                  task objects reliably.</p>
+                <figure>
+                  <div class="media-slot">
+                    <svg viewBox="0 0 24 24"><path d="M19 3H5a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V5a2 2 0 0 0-2-2zm0 14.5-4-5-3 4-2-2.5L7 17.5V5h12v12.5z"/><circle cx="8.5" cy="8.5" r="1.5"/></svg>
+                    <span class="fn">media/end-effector.jpg</span>
+                    <span class="lbl">CAD render and/or the printed part on the arm.</span>
+                  </div>
+                </figure>
+              </div>
+
+              <div class="jstep">
+                <div class="num">2</div>
+                <h4>Teleoperation &amp; demonstrations</h4>
+                <p class="jtext">Drove the robot by teleoperation to record demonstrations of the task —
+                  the raw material the policy learns from.</p>
+                <figure>
+                  <div class="media-slot">
+                    <svg viewBox="0 0 24 24"><path d="M4 4h16a2 2 0 0 1 2 2v12a2 2 0 0 1-2 2H4a2 2 0 0 1-2-2V6a2 2 0 0 1 2-2zm6 4v8l6-4-6-4z"/></svg>
+                    <span class="fn">media/teleop.mp4</span>
+                    <span class="lbl">A few seconds of teleop data collection.</span>
+                  </div>
+                </figure>
+              </div>
+
+              <div class="jstep">
+                <div class="num">3</div>
+                <h4>Data pipeline</h4>
+                <p class="jtext">Synchronized the camera stream with the robot's joint states and packed
+                  everything into training-ready episodes.</p>
+              </div>
+
+              <div class="jstep todo">
+                <div class="num">4</div>
+                <h4>Simulation at scale &nbsp;<span class="soon-pill">write-up coming</span></h4>
+                <p class="jtext">Recreating the full workcell in NVIDIA Isaac Sim to auto-generate
+                  demonstrations far faster than teleoperation allows. I'll expand this section soon.</p>
+                <figure>
+                  <div class="media-slot">
+                    <svg viewBox="0 0 24 24"><path d="M19 3H5a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V5a2 2 0 0 0-2-2zm0 14.5-4-5-3 4-2-2.5L7 17.5V5h12v12.5z"/><circle cx="8.5" cy="8.5" r="1.5"/></svg>
+                    <span class="fn">media/isaac-sim.png</span>
+                    <span class="lbl">The workcell recreated in Isaac Sim.</span>
+                  </div>
+                </figure>
+              </div>
+
+              <div class="jstep">
+                <div class="num">5</div>
+                <h4>Training the policy</h4>
+                <p class="jtext">Fine-tuned a SmolVLA policy on the collected data, tuning the recipe
+                  until the behaviour was stable.</p>
+              </div>
+
+              <div class="jstep">
+                <div class="num">6</div>
+                <h4>Evaluation &amp; sim-to-real</h4>
+                <p class="jtext">Ran the policy on the physical robot and studied where simulation and
+                  reality diverge — and how to close that gap.</p>
+                <figure>
+                  <div class="media-slot">
+                    <svg viewBox="0 0 24 24"><path d="M4 4h16a2 2 0 0 1 2 2v12a2 2 0 0 1-2 2H4a2 2 0 0 1-2-2V6a2 2 0 0 1 2-2zm6 4v8l6-4-6-4z"/></svg>
+                    <span class="fn">media/eval.mp4</span>
+                    <span class="lbl">Side-by-side of sim rollout vs. the real robot.</span>
+                  </div>
+                </figure>
+              </div>
+
+            </div>
+          </div>
+        </details>
+      </article>
+
+      <!-- ---------- PROJECT 2: EEML ---------- -->
+      <article class="rentry">
+        <div class="rtop">
+          <h3>EEML Summer School &amp; the TD-MPC reproduction</h3>
+          <span class="when">2026</span>
+        </div>
+        <div class="org">Eastern European Machine Learning Summer School — poster session</div>
+
+        <p class="rlede">
+          EEML 2026 is where my research direction clicked. Alongside lectures and hands-on sessions from
+          leading machine-learning researchers, I reproduced <strong>TD-MPC</strong> from scratch for the
+          poster session — and the conversations I had there, with researchers from Google DeepMind, pushed
+          me toward the generative models and VLA systems I work on now. The poster went on to win
+          <strong>Best Poster</strong> among ~250 participants, most of them MSc and PhD students.
+        </p>
+
+        <figure class="hero-media">
+          <div class="media-slot wide">
+            <svg viewBox="0 0 24 24"><path d="M19 3H5a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V5a2 2 0 0 0-2-2zm0 14.5-4-5-3 4-2-2.5L7 17.5V5h12v12.5z"/><circle cx="8.5" cy="8.5" r="1.5"/></svg>
+            <span class="fn">media/poster-ceremony.jpeg</span>
+            <span class="lbl">The poster award ceremony.</span>
+          </div>
+          <!-- CONFIRM Viorica's surname before publishing -->
+          <figcaption>At the EEML 2026 poster award ceremony, with Razvan Pascanu and Viorica [surname?].</figcaption>
+        </figure>
+
+        <div class="rlinks">
+          <span class="repo soon">
+            <svg viewBox="0 0 24 24"><path d="M12 2C6.5 2 2 6.6 2 12.3c0 4.5 2.9 8.3 6.8 9.7.5.1.7-.2.7-.5v-1.7c-2.8.6-3.4-1.4-3.4-1.4-.5-1.2-1.1-1.5-1.1-1.5-.9-.6.1-.6.1-.6 1 .1 1.5 1 1.5 1 .9 1.6 2.4 1.1 3 .9.1-.7.4-1.1.6-1.4-2.2-.3-4.6-1.1-4.6-5 0-1.1.4-2 1-2.7-.1-.3-.5-1.3.1-2.7 0 0 .8-.3 2.7 1a9 9 0 0 1 4.9 0c1.9-1.3 2.7-1 2.7-1 .6 1.4.2 2.4.1 2.7.6.7 1 1.6 1 2.7 0 3.9-2.4 4.7-4.6 5 .4.3.7.9.7 1.9v2.8c0 .3.2.6.7.5a10.3 10.3 0 0 0 6.8-9.7C22 6.6 17.5 2 12 2z"/></svg>
+            Repository coming soon
+          </span>
+        </div>
+
+        <details class="curious">
+          <summary class="csum"><span class="chev">▸</span> The reproduction — for the curious</summary>
+          <div class="cbody">
+            <div class="journey">
+
+              <div class="jstep">
+                <div class="num">1</div>
+                <h4>What TD-MPC is</h4>
+                <p class="jtext">A model-based RL method that learns a latent world model and plans in it —
+                  bridging reinforcement learning and model-predictive control, which is exactly the overlap
+                  of my degree.</p>
+              </div>
+
+              <div class="jstep">
+                <div class="num">2</div>
+                <h4>Built from scratch</h4>
+                <p class="jtext">Re-implemented the method in a clean, CleanRL-style codebase to understand
+                  every moving part rather than running someone else's repo.</p>
+              </div>
+
+              <div class="jstep">
+                <div class="num">3</div>
+                <h4>The trained agent in action</h4>
+                <p class="jtext">The reproduced agent learns to run the HalfCheetah locomotion benchmark
+                  end-to-end from its learned latent world model.</p>
+                <figure>
+                  <div class="media-slot">
+                    <svg viewBox="0 0 24 24"><path d="M4 4h16a2 2 0 0 1 2 2v12a2 2 0 0 1-2 2H4a2 2 0 0 1-2-2V6a2 2 0 0 1 2-2zm6 4v8l6-4-6-4z"/></svg>
+                    <span class="fn">media/halfcheetah-trained.mp4</span>
+                    <span class="lbl">The trained HalfCheetah running.</span>
+                  </div>
+                </figure>
+              </div>
+
+              <div class="jstep">
+                <div class="num">4</div>
+                <h4>Ablation on the latent-consistency loss</h4>
+                <p class="jtext">Studied how the consistency term shapes training — trading some stability
+                  for a faster, higher-peaking policy.</p>
+                <figure>
+                  <div class="media-slot">
+                    <svg viewBox="0 0 24 24"><path d="M19 3H5a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V5a2 2 0 0 0-2-2zm0 14.5-4-5-3 4-2-2.5L7 17.5V5h12v12.5z"/><circle cx="8.5" cy="8.5" r="1.5"/></svg>
+                    <span class="fn">media/td-mpc-reward-curves.png</span>
+                    <span class="lbl">Reward curves — reproduction vs. ablation.</span>
+                  </div>
+                </figure>
+              </div>
+
+              <div class="jstep">
+                <div class="num">5</div>
+                <h4>The poster</h4>
+                <p class="jtext">Presented the work at the poster session and received the Best Poster award.</p>
+                <figure>
+                  <div class="media-slot">
+                    <svg viewBox="0 0 24 24"><path d="M19 3H5a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V5a2 2 0 0 0-2-2zm0 14.5-4-5-3 4-2-2.5L7 17.5V5h12v12.5z"/><circle cx="8.5" cy="8.5" r="1.5"/></svg>
+                    <span class="fn">media/td-mpc-poster.jpg</span>
+                    <span class="lbl">A photo of you at the poster.</span>
+                  </div>
+                </figure>
+              </div>
+
+            </div>
+          </div>
+        </details>
+      </article>
+
+    </div>
+  </section>
+
+  <!-- ===================== PROJECTS ===================== -->
+  <section id="projects" class="on-white">
+    <div class="wrap">
+      <div class="sec-head">
+        <h2>Projects</h2>
+        <p>Selected engineering and research projects. More repositories going up over time.</p>
+      </div>
+
+      <div class="projects">
+        <div class="panel">
+          <h3>Hardware-in-the-loop sorting plant</h3>
+          <div class="when">2026</div>
+          <div class="desc">
+            Real-time HIL simulation of an industrial sorting plant in LabVIEW on NI CompactRIO, built
+            with a producer–consumer architecture, state machines, and SCADA integration.
+          </div>
+          <div class="tags"><span class="tag">LabVIEW</span><span class="tag">CompactRIO</span><span class="tag">SCADA</span></div>
+          <span class="repo soon">
+            <svg viewBox="0 0 24 24"><path d="M12 2C6.5 2 2 6.6 2 12.3c0 4.5 2.9 8.3 6.8 9.7.5.1.7-.2.7-.5v-1.7c-2.8.6-3.4-1.4-3.4-1.4-.5-1.2-1.1-1.5-1.1-1.5-.9-.6.1-.6.1-.6 1 .1 1.5 1 1.5 1 .9 1.6 2.4 1.1 3 .9.1-.7.4-1.1.6-1.4-2.2-.3-4.6-1.1-4.6-5 0-1.1.4-2 1-2.7-.1-.3-.5-1.3.1-2.7 0 0 .8-.3 2.7 1a9 9 0 0 1 4.9 0c1.9-1.3 2.7-1 2.7-1 .6 1.4.2 2.4.1 2.7.6.7 1 1.6 1 2.7 0 3.9-2.4 4.7-4.6 5 .4.3.7.9.7 1.9v2.8c0 .3.2.6.7.5a10.3 10.3 0 0 0 6.8-9.7C22 6.6 17.5 2 12 2z"/></svg>
+            Repository coming soon
+          </span>
+        </div>
+
+        <!-- DUPLICATE THIS BLOCK for each new project. Swap the "soon" span for a real link:
+             <a class="repo" href="https://github.com/radulovicc/REPO"><svg ...></svg> Repository</a> -->
+        <div class="panel">
+          <h3>More coming</h3>
+          <div class="when">ongoing</div>
+          <div class="desc">
+            I'm writing up and open-sourcing my work one project at a time. Check back, or find the latest
+            on my GitHub.
+          </div>
+          <div class="tags"><span class="tag">in progress</span></div>
+          <a class="repo" href="https://github.com/radulovicc">
+            <svg viewBox="0 0 24 24"><path d="M12 2C6.5 2 2 6.6 2 12.3c0 4.5 2.9 8.3 6.8 9.7.5.1.7-.2.7-.5v-1.7c-2.8.6-3.4-1.4-3.4-1.4-.5-1.2-1.1-1.5-1.1-1.5-.9-.6.1-.6.1-.6 1 .1 1.5 1 1.5 1 .9 1.6 2.4 1.1 3 .9.1-.7.4-1.1.6-1.4-2.2-.3-4.6-1.1-4.6-5 0-1.1.4-2 1-2.7-.1-.3-.5-1.3.1-2.7 0 0 .8-.3 2.7 1a9 9 0 0 1 4.9 0c1.9-1.3 2.7-1 2.7-1 .6 1.4.2 2.4.1 2.7.6.7 1 1.6 1 2.7 0 3.9-2.4 4.7-4.6 5 .4.3.7.9.7 1.9v2.8c0 .3.2.6.7.5a10.3 10.3 0 0 0 6.8-9.7C22 6.6 17.5 2 12 2z"/></svg>
+            github.com/radulovicc
+          </a>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===================== AWARDS ===================== -->
+  <section id="awards">
+    <div class="wrap">
+      <div class="sec-head"><h2>Awards &amp; recognition</h2></div>
+      <ul class="awards">
+        <li><span class="mark">◆</span><span><b>Best Poster Award</b> — EEML Summer School 2026 <span class="meta">(~250 participants)</span></span></li>
+        <li><span class="mark">◆</span><span><b>1st place, Elektrijada</b> — Mathematical Analysis 1 <span class="meta">(national student competition)</span></span></li>
+        <li><span class="mark">◆</span><span><b>1st place, Elektrijada</b> — Mathematical Analysis 2 <span class="meta">(national student competition)</span></span></li>
+        <li><span class="mark">◆</span><span><b>Shortlisted</b> — EPFL Excellence Research Internship, 2026</span></li>
+        <li><span class="mark">◆</span><span><b>1st place, EEStech Challenge — Autonomous Vehicles</b> <span class="meta">(Novi Sad; advancing to the international round)</span></span></li>
+      </ul>
+    </div>
+  </section>
+
+  <!-- ===================== CONTACT ===================== -->
+  <section id="contact" class="contact">
+    <div class="wrap">
+      <h2>Get in touch</h2>
+      <p class="sub">Open to summer research internships and collaborations in robot learning and embodied AI.</p>
+      <div class="contact-links">
+        <a href="mailto:alradulovic2004@gmail.com">
+          <svg viewBox="0 0 24 24"><path d="M20 4H4c-1.1 0-2 .9-2 2v12c0 1.1.9 2 2 2h16c1.1 0 2-.9 2-2V6c0-1.1-.9-2-2-2zm0 4l-8 5-8-5V6l8 5 8-5v2z"/></svg>
+          alradulovic2004@gmail.com
+        </a>
+        <a href="https://github.com/radulovicc">
+          <svg viewBox="0 0 24 24"><path d="M12 2C6.5 2 2 6.6 2 12.3c0 4.5 2.9 8.3 6.8 9.7.5.1.7-.2.7-.5v-1.7c-2.8.6-3.4-1.4-3.4-1.4-.5-1.2-1.1-1.5-1.1-1.5-.9-.6.1-.6.1-.6 1 .1 1.5 1 1.5 1 .9 1.6 2.4 1.1 3 .9.1-.7.4-1.1.6-1.4-2.2-.3-4.6-1.1-4.6-5 0-1.1.4-2 1-2.7-.1-.3-.5-1.3.1-2.7 0 0 .8-.3 2.7 1a9 9 0 0 1 4.9 0c1.9-1.3 2.7-1 2.7-1 .6 1.4.2 2.4.1 2.7.6.7 1 1.6 1 2.7 0 3.9-2.4 4.7-4.6 5 .4.3.7.9.7 1.9v2.8c0 .3.2.6.7.5a10.3 10.3 0 0 0 6.8-9.7C22 6.6 17.5 2 12 2z"/></svg>
+          github.com/radulovicc
+        </a>
+        <a href="#">
+          <svg viewBox="0 0 24 24"><path d="M19 3A2 2 0 0 1 21 5v14a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h14zM8.3 18.3V10H5.7v8.3h2.6zM7 8.8a1.5 1.5 0 1 0 0-3 1.5 1.5 0 0 0 0 3zm11.3 9.5v-4.6c0-2.5-1.3-3.6-3.1-3.6-1.4 0-2 .8-2.4 1.3V10h-2.6v8.3h2.6v-4.6c0-1.2.9-1.4 1.4-1.4.5 0 1.5.2 1.5 1.5v4.5h2.6z"/></svg>
+          LinkedIn
+        </a>
+      </div>
+    </div>
+  </section>
+
+  <footer class="foot">
+    <div class="wrap">© 2026 Aleksandar Radulović · Novi Sad, Serbia</div>
+  </footer>
+
+  <script>
+    // Highlight the current section in the nav.
+    const links = [...document.querySelectorAll('nav a[href^="#"]')];
+    const map = {};
+    links.forEach(a => { const id = a.getAttribute('href').slice(1); if(id) map[id] = a; });
+    const obs = new IntersectionObserver(entries => {
+      entries.forEach(e => {
+        if(e.isIntersecting){
+          links.forEach(l => l.classList.remove('active'));
+          if(map[e.target.id]) map[e.target.id].classList.add('active');
+        }
+      });
+    }, { rootMargin: '-45% 0px -50% 0px' });
+    document.querySelectorAll('section[id]').forEach(s => obs.observe(s));
+  </script>
+
+</body>
+</html>
