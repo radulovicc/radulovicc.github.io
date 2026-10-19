@@ -165,8 +165,13 @@
   .hero-media{margin-bottom:8px;}
   figure img,figure video{display:block;max-width:100%;height:auto;margin:0 auto;
     border-radius:10px;border:1px solid var(--line);}
-  .hero-media img,.hero-media video{width:100%;max-height:560px;object-fit:cover;}
-  .jstep figure img,.jstep figure video{max-height:440px;}
+  .hero-media img,.hero-media video,
+  .jstep figure img,.jstep figure video{
+    width:auto;max-width:100%;max-height:440px;object-fit:contain;margin:0 auto;}
+  /* two charts side by side */
+  .figrow{display:flex;flex-wrap:wrap;gap:16px;align-items:flex-start;}
+  .figrow figure{flex:1 1 300px;margin:0;}
+  .figrow img{width:100%;max-height:none;}
 
   /* media placeholder (until real image/video is dropped in) */
   .media-slot{border:1.5px dashed var(--olive-soft);border-radius:10px;
@@ -387,10 +392,8 @@
         </p>
 
         
-          <div class="media-slot wide">
-            <video src="media/vla-hero.mp4" controls muted loop playsinline preload="metadata"></video>
-            <span class="lbl">Short clip of the robot completing the task — the one thing to show first.</span>
-          </div>
+        <figure class="hero-media">
+          <video src="media/vla-hero.mp4" controls muted loop playsinline preload="metadata"></video>
           <figcaption>The FANUC CRX running the learned policy.</figcaption>
         </figure>
 
@@ -534,10 +537,16 @@
                 <h4>Ablation on the latent-consistency loss</h4>
                 <p class="jtext">Studied how the consistency term shapes training — trading some stability
                   for a faster, higher-peaking policy.</p>
-                <figure>
-                  <img src="media/td-mpc-reward-curves.png" alt="TD-MPC reward curves: reproduction vs. ablation">
-                  <figcaption>Reproduction plateaus near 7000; removing the latent-consistency loss reaches ~9000+ but trains far less stably.</figcaption>
-                </figure>
+                <div class="figrow">
+                  <figure>
+                    <img src="media/training_curve.png" alt="TD-MPC reproduction training curve">
+                    <figcaption>Reproduction — reward plateaus near 7000.</figcaption>
+                  </figure>
+                  <figure>
+                    <img src="media/ablation_consistency.png" alt="Ablation: latent-consistency loss removed">
+                    <figcaption>Ablation — removing the latent-consistency loss reaches ~9000+ but trains far less stably.</figcaption>
+                  </figure>
+                </div>
               </div>
 
               <div class="jstep">
